@@ -7,7 +7,7 @@
 		
 		<script src="complex.js" type="text/javascript"></script>
 		<script src="fractal.js" type="text/javascript"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js" type="text/javascript"></script>
+		<script src="utility.js" type="text/javascript"></script>
 	</head>
 
 	<body onload="main();">
@@ -30,8 +30,8 @@
 		<p class="center">
 			<button type="button" class="shiny-blue" onclick="fractal.zoomToRectangle(); ">ZOOM</button>
 			<button type="button" class="shiny-blue" onclick="fractal.random();">RANDOM</button>
-			<button type="button" class="shiny-blue" onclick="$('#details').fadeToggle();">DETAILS</button>
-			<button type="button" class="shiny-blue" onclick="$('#info').fadeToggle();">INFO</button>
+			<button type="button" class="shiny-blue" onclick="toggle('details')">DETAILS</button>
+			<button type="button" class="shiny-blue" onclick="toggle('info')">INFO</button>
 		</p>
 
 		<fieldset id="details" style="display:none; ">
