@@ -1,0 +1,6 @@
+root = true
+
+[*.{css,html,js}]
+charset = utf-8
+indent_style = space
+indent_size = 4
