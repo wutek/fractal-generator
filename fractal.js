@@ -159,14 +159,14 @@
 		fractal.canvas.getContext("2d").putImageData(fractal.imageData, 0, 0);
 	};
 
-	fractal.onmousedown = function (event) {
+    fractal.canvas.addEventListener("mousedown", function (event) {
 		if (event.which != 1) return; //only left button
 
 		zoomP1 = fractal.getXY(event);
 		bSelection = true;
 	};
 
-	fractal.onmousemove = function (event) {
+    fractal.canvas.addEventListener("mousemove", function (event) {
 		if (bSelection)
 		{
 			zoomP2 = fractal.getXY(event);
@@ -176,7 +176,7 @@
 		}
 	};
 
-	fractal.onmouseup = function (event) {
+    fractal.canvas.addEventListener("mouseup", function (event) {
 		if (event.which != 1) return; //only left button
 
 		zoomP2 = fractal.getXY(event);
@@ -191,7 +191,7 @@
 		}
 	};
 
-	fractal.onmouseout = function (event) {
+    fractal.canvas.addEventListener("mouseout", function () {
 		if (bSelection)
 		{
 			bSelection = false;
