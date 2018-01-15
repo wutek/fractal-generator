@@ -50,25 +50,19 @@ window.fractal = window.fractal || {};
 
 	/* public methods */
 	fractal.depth = function (x, y) {
-		let z = new Complex(renderOptions.x0 + x * (renderOptions.width / fractal.imageData.width), renderOptions.y0 + y * (renderOptions.height / fractal.imageData.height));
+		let z = new Complex(
+            renderOptions.x0 + x * (renderOptions.width / fractal.imageData.width),
+            renderOptions.y0 + y * (renderOptions.height / fractal.imageData.height)
+        );
+        let i = 1;
 
-		for (let i = 1; i <= renderOptions.iterations; i++) {
-			switch (renderOptions.functionFormula) {
-				case 2:
-					z.square();
-					break;
-				case 3:
-					z.cube();
-					break;
-				case 4:
-					z.power4();
-					break;
-				case 5:
-					z.power5();
-					break;
-			}
+		while (i <= renderOptions.iterations) {
+            z.power(renderOptions.functionFormula);
 			z.add(renderOptions.c);
-			if (z.norm() > 25) return i;
+			if (z.norm() > 25) {
+                return i;
+            }
+            i += 1;
 		}
 
 		return 0;
@@ -163,8 +157,10 @@ window.fractal = window.fractal || {};
 	};
 
 	fractal.deselect = function () {
-		for (let x=fractal.imageData.width*fractal.imageData.height*4; x; x-=4) {
-			fractal.imageData.data[x+3]=255;
+        let x = fractal.imageData.width * fractal.imageData.height * 4;
+		while (x > 0) {
+			fractal.imageData.data[x+3] = 255;
+            x -= 4;
 		}
 		fractal.canvas.getContext("2d").putImageData(fractal.imageData, 0, 0);
 	};
