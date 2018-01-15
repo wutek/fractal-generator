@@ -6,6 +6,8 @@
     Complex, window
 */
 
+window.fractal = window.fractal || {};
+
 (function (fractal) {
     const renderOptions = {
         functionFormula: 2,
@@ -287,4 +289,4 @@
 	fractal.render();
 	fractal.updateStatus();
 
-}(window.fractal = window.fractal || {}));
+}(window.fractal));
