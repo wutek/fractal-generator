@@ -2,9 +2,10 @@
     browser, fudge
 */
 
+"use strict";
+
 function toggle(elementId) {
-    "use strict";
-    let elementToToggle = document.getElementById(elementId);
+    const elementToToggle = document.getElementById(elementId);
 
     if (!elementToToggle) {
         return;
