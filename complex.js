@@ -46,7 +46,7 @@ Complex.prototype = {
             n -= 1;
         }
     },
-    copy = function (x, y) {
+    copy: function (x, y) {
         this.real = x;
         this.img = y;
     }
