@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
 		<title>Fractal Generator</title>
-		<link rel="stylesheet" type="text/css" href="styles.css" media="screen" />
-		
+		<link rel="stylesheet" type="text/css" href="styles.css" media="screen">
+
 		<script src="complex.js" type="text/javascript"></script>
 		<script src="fractal.js" type="text/javascript" defer></script>
 		<script src="utility.js" type="text/javascript"></script>
@@ -26,15 +26,15 @@
 
 		<fieldset id="details" style="display:none; ">
 			<legend>DETAILS</legend>
-			<span class="variableName">x<sub>0</sub></span><span class="variableRange"> (-2, 2)</span><input id="fractal_x0" type="text" value="-2" />
-			<span class="variableName">y<sub>0</sub></span><span class="variableRange"> (-1.5, 1.5)</span><input id="fractal_y0" type="text" value="-1.5" />
-			<br/>
-			<span class="variableName">c<sub>real</sub></span><span class="variableRange"> (-1, 1)</span><input id="fractal_cReal" type="number" min="-1" max="1" />
-			<span class="variableName">c<sub>img</sub></span><span class="variableRange"> (-1, 1)</span><input id="fractal_cImg" type="number" min="-1" max="1" />
-			<br/>
-			<span class="variableName">width </span><span class="variableRange"> (0, 4)</span><input id="fractal_width" type="text" value="4" />
-			<span class="variableName">height</span><span class="variableRange"> (0, 3)</span><input id="fractal_height" type="text" value="3" />
-			<br/>
+			<span class="variableName">x<sub>0</sub></span><span class="variableRange"> (-2, 2)</span><input id="fractal_x0" type="text" value="-2">
+			<span class="variableName">y<sub>0</sub></span><span class="variableRange"> (-1.5, 1.5)</span><input id="fractal_y0" type="text" value="-1.5">
+			<br>
+			<span class="variableName">c<sub>real</sub></span><span class="variableRange"> (-1, 1)</span><input id="fractal_cReal" type="number" min="-1" max="1">
+			<span class="variableName">c<sub>img</sub></span><span class="variableRange"> (-1, 1)</span><input id="fractal_cImg" type="number" min="-1" max="1">
+			<br>
+			<span class="variableName">width </span><span class="variableRange"> (0, 4)</span><input id="fractal_width" type="text" value="4">
+			<span class="variableName">height</span><span class="variableRange"> (0, 3)</span><input id="fractal_height" type="text" value="3">
+			<br>
 			<span class="variableName">brightness</span>
 			<select id="fractal_brightness" onchange="fractal.update();">
 				<option>0.5</option>
@@ -52,7 +52,7 @@
 				<option>1024</option>
 				<option>1536</option>
 			</select>
-			<br/>
+			<br>
 			<span class="variableName">function</span>
 			<select id="fractal_function" onchange="fractal.update()">
 				<option selected="selected" value="2">z² + c</option>
