@@ -164,7 +164,7 @@
 
 		zoomP1 = fractal.getXY(event);
 		bSelection = true;
-	};
+	});
 
     fractal.canvas.addEventListener("mousemove", function (event) {
 		if (bSelection)
@@ -174,7 +174,7 @@
 			fractal.deselect();
 			fractal.select(zoomP1, zoomP2);
 		}
-	};
+	});
 
     fractal.canvas.addEventListener("mouseup", function (event) {
 		if (event.which != 1) return; //only left button
@@ -189,7 +189,7 @@
 		if (zoomP1[0]==zoomP2[0] && zoomP1[1]==zoomP2[1]) {
 			fractal.zoomToPoint(getCoordinates(fractal.getXY(event)));
 		}
-	};
+	});
 
     fractal.canvas.addEventListener("mouseout", function () {
 		if (bSelection)
@@ -199,7 +199,7 @@
 			fractal.deselect();
 			fractal.select(zoomP1, zoomP2);
 		}
-	};
+	});
 
 	fractal.update = function () {
 		c.real = parseFloat(document.getElementById("fractal_cReal").value);
