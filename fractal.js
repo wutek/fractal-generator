@@ -1,4 +1,11 @@
-/* namespace::fractal */
+/*jslint
+    browser, for, fudge
+*/
+
+/*global
+    Complex, window
+*/
+
 (function (fractal) {
 	/* private atributes */
 	var x0 = -1.8, y0 = -1.35;
@@ -10,9 +17,6 @@
 	var bSelection = false;
 	var resolution = "640x480";
 	var nFunction = 2;
-
-	//tmp
-	var fi=0, mod=0.9;
 
 	/* public atributes */
 	fractal.canvas = document.getElementById("mainCanvas");
