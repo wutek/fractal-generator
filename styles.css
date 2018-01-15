@@ -73,6 +73,10 @@ sub {
 	font-size: 10px;
 }
 
+footer {
+	text-align: center;
+}
+
 /* shiny blue (inspired by rdio iphone interface)
 *******************************************************************************/
 button.shiny-blue {
