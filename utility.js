@@ -1,10 +1,9 @@
 /*jslint
-    browser, fudge
+    browser
 */
 
-"use strict";
-
 function toggle(elementId) {
+    "use strict";
     const elementToToggle = document.getElementById(elementId);
 
     if (!elementToToggle) {
