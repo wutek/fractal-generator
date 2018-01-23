@@ -152,10 +152,16 @@ window.fractal = window.fractal || {};
     };
 
     fractal.select = function (p1, p2) {
-        for (let x = Math.min(p1[0], p2[0]); x < Math.max(p1[0], p2[0]); x++) {
-            for (let y = Math.min(p1[1], p2[1]); y < Math.max(p1[1], p2[1]); y++) {
+        let x = Math.min(p1[0], p2[0]);
+        let y;
+
+        while (x < Math.max(p1[0], p2[0])) {
+            y = Math.min(p1[1], p2[1]);
+            while (y < Math.max(p1[1], p2[1])) {
                 fractal.imageData.data[(x + y * fractal.imageData.width) * 4 + 3] = 190;
+                y += 1;
             }
+            x += 1;
         }
         fractal.canvas.getContext("2d").putImageData(fractal.imageData, 0, 0);
     };
