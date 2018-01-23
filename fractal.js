@@ -20,7 +20,7 @@ window.fractal = window.fractal || {};
         width: 3.6,
         height: 2.7,
         c: new Complex(0.377, -0.278)
-    }
+    };
     let zoomP1 = [0, 0];
     let zoomP2 = [0, 0];
 
@@ -69,11 +69,13 @@ window.fractal = window.fractal || {};
     };
 
     fractal.render = function () {
-        let x, y, b;
+        let x;
+        let y;
+        let b;
         let t0 = new Date().getTime();
 
-        for (x = 0; x < fractal.imageData.width; x++) {
-            for (y = 0; y < fractal.imageData.height; y++) {
+        for (x = 0; x < fractal.imageData.width; x += 1) {
+            for (y = 0; y < fractal.imageData.height; y += 1) {
                 b = Math.floor(renderOptions.brightness * fractal.depth(x, y));
                 if (b > 0) {
                     setPixel(x, fractal.imageData.height - 1 - y, b > 511 ? b - 511 : 0, b > 255 ? b - 255 : 0, Math.min(b, 255), 255); //blue
@@ -117,7 +119,9 @@ window.fractal = window.fractal || {};
     };
 
     fractal.zoomToRectangle = function () {
-        if (zoomP1[0] === zoomP2[0] || zoomP1[1] === zoomP2[1]) return 0;
+        if (zoomP1[0] === zoomP2[0] || zoomP1[1] === zoomP2[1]) {
+            return;
+        }
 
         let x = getCoordinates(zoomP1);
         let y = getCoordinates(zoomP2);
@@ -183,7 +187,9 @@ window.fractal = window.fractal || {};
     });
 
     fractal.canvas.addEventListener("mouseup", function (event) {
-        if (event.which != 1) return; //only left button
+        if (event.which != 1) {
+            return; //only left button
+        }
 
         zoomP2 = fractal.getXY(event);
         renderOptions.selection = false
@@ -198,8 +204,7 @@ window.fractal = window.fractal || {};
     });
 
     fractal.canvas.addEventListener("mouseout", function () {
-        if (renderOptions.selection)
-        {
+        if (renderOptions.selection) {
             renderOptions.selection = false;
 
             fractal.deselect();
@@ -245,33 +250,34 @@ window.fractal = window.fractal || {};
         fractal.render();
         fractal.updateStatus();
 
-        if (document.getElementById("stop").value != "stop")
+        if (document.getElementById("stop").value != "stop") {
             setTimeout(fractal.test, 10);
+        }
     }
 
     fractal.resize = function (size) {
         switch (size) {
-            case '320x240':
+            case "320x240":
                 fractal.canvas.width = 320;
                 fractal.canvas.height = 240;
                 break;
-            case '640x480':
+            case "640x480":
                 fractal.canvas.width = 640;
                 fractal.canvas.height = 480;
                 break;
-            case '800x600':
+            case "800x600":
                 fractal.canvas.width = 800;
                 fractal.canvas.height = 600;
                 break;
-            case '1024x768':
+            case "1024x768":
                 fractal.canvas.width = 1024;
                 fractal.canvas.height = 768;
                 break;
-            case '1800x1200':
+            case "1800x1200":
                 fractal.canvas.width = 1800;
                 fractal.canvas.height = 1200;
                 break;
-            case '4000x3000':
+            case "4000x3000":
                 fractal.canvas.width = 4000;
                 fractal.canvas.height = 3000;
                 break;
