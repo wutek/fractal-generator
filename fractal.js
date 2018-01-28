@@ -1,5 +1,5 @@
 /*jslint
-    browser, for, fudge
+    browser
 */
 
 /*global
@@ -37,7 +37,7 @@ window.fractal = window.fractal || {};
         imageData.data[index + 3] = a;
     }
 
-    function getCoordinates(point) { //converts pixels to real numbers
+    function getCoordinates(point) {
         const x = renderOptions.x0 + renderOptions.width * point[0] / canvas.width;
         const y = renderOptions.y0 + renderOptions.height * (canvas.height - point[1]) / canvas.height;
 
@@ -171,7 +171,7 @@ window.fractal = window.fractal || {};
             x += 1;
         }
         canvas.getContext("2d").putImageData(imageData, 0, 0);
-    };
+    }
 
     canvas.addEventListener("mousedown", function (event) {
         if (event.which !== 1) {
