@@ -26,11 +26,10 @@ window.fractal = window.fractal || {};
     let zoomP1 = [0, 0];
     let zoomP2 = [0, 0];
     const canvas = document.getElementById("mainCanvas");
-    let imageData = fractal.canvas.getContext("2d").createImageData(fractal.canvas.width, fractal.canvas.height);
+    let imageData = canvas.getContext("2d").createImageData(canvas.width, canvas.height);
 
-    /* private methods */
     function setPixel(x, y, r, g, b, a) {
-        let index = (x + y * imageData.width) * 4;
+        const index = (x + y * imageData.width) * 4;
 
         imageData.data[index] = r;
         imageData.data[index + 1] = g;
@@ -39,11 +38,8 @@ window.fractal = window.fractal || {};
     }
 
     function getCoordinates(point) { //converts pixels to real numbers
-        let x = point[0];
-        let y = point[1];
-
-        x = renderOptions.x0 + renderOptions.width * x / canvas.width;
-        y = renderOptions.y0 + renderOptions.height * (canvas.height - y) / canvas.height;
+        const x = renderOptions.x0 + renderOptions.width * point[0] / canvas.width;
+        const y = renderOptions.y0 + renderOptions.height * (canvas.height - point[1]) / canvas.height;
 
         return [x, y];
     }
@@ -67,16 +63,14 @@ window.fractal = window.fractal || {};
         return 0;
     }
 
-    /* public methods */
     fractal.render = function () {
-        let x;
-        let y;
-        let b;
+        let x = 0;
         let t0 = Date.now();
 
-        for (x = 0; x < imageData.width; x += 1) {
-            for (y = 0; y < imageData.height; y += 1) {
-                b = Math.floor(renderOptions.brightness * depth(x, y));
+        while (x < imageData.width) {
+            let y = 0;
+            while (y < imageData.height) {
+                let b = Math.floor(renderOptions.brightness * depth(x, y));
                 if (b > 0) {
                     setPixel(
                         x,
@@ -92,7 +86,9 @@ window.fractal = window.fractal || {};
                     //if ((x + y) % 20 < 10) {setPixel(x, imageData.height - 1 - y, 255, 0, 0, 255);} else //uncomment for red/white stripes
                     setPixel(x, imageData.height - 1 - y, 0xFF, 0xFF, 0xFF, 0xFF);
                 }
+                y += 1;
             }
+            x += 1;
         }
         canvas.getContext("2d").putImageData(fractal.imageData, 0, 0);
 
@@ -158,11 +154,8 @@ window.fractal = window.fractal || {};
         document.getElementById("fractal_resolution").value = renderOptions.resolution;
     };
 
-    fractal.select = function (p1, p2) {
-        let x;
-        let y;
-
-        x = imageData.width * imageData.height * 4;
+    function select(p1, p2) {
+        let x = imageData.width * imageData.height * 4;
         while (x > 0) {
             imageData.data[x + 3] = 255;
             x -= 4;
@@ -170,7 +163,7 @@ window.fractal = window.fractal || {};
 
         x = Math.min(p1[0], p2[0]);
         while (x < Math.max(p1[0], p2[0])) {
-            y = Math.min(p1[1], p2[1]);
+            let y = Math.min(p1[1], p2[1]);
             while (y < Math.max(p1[1], p2[1])) {
                 imageData.data[(x + y * imageData.width) * 4 + 3] = 190;
                 y += 1;
@@ -180,24 +173,24 @@ window.fractal = window.fractal || {};
         canvas.getContext("2d").putImageData(imageData, 0, 0);
     };
 
-    fractal.canvas.addEventListener("mousedown", function (event) {
+    canvas.addEventListener("mousedown", function (event) {
         if (event.which !== 1) {
             return; //only left button
         }
 
         zoomP1 = fractal.getXY(event);
         renderOptions.selection = true;
-    });
+    }, false);
 
-    fractal.canvas.addEventListener("mousemove", function (event) {
+    canvas.addEventListener("mousemove", function (event) {
         if (renderOptions.selection) {
             zoomP2 = fractal.getXY(event);
 
-            fractal.select(zoomP1, zoomP2);
+            select(zoomP1, zoomP2);
         }
-    });
+    }, false);
 
-    fractal.canvas.addEventListener("mouseup", function (event) {
+    canvas.addEventListener("mouseup", function (event) {
         if (event.which !== 1) {
             return; //only left button
         }
@@ -205,21 +198,21 @@ window.fractal = window.fractal || {};
         zoomP2 = fractal.getXY(event);
         renderOptions.selection = false;
 
-        fractal.select(zoomP1, zoomP2);
+        select(zoomP1, zoomP2);
 
         //check if it was selection or the click
         if (zoomP1[0] === zoomP2[0] && zoomP1[1] === zoomP2[1]) {
             fractal.zoomToPoint(getCoordinates(fractal.getXY(event)));
         }
-    });
+    }, false);
 
-    fractal.canvas.addEventListener("mouseout", function () {
+    canvas.addEventListener("mouseout", function () {
         if (renderOptions.selection) {
             renderOptions.selection = false;
 
-            fractal.select(zoomP1, zoomP2);
+            select(zoomP1, zoomP2);
         }
-    });
+    }, false);
 
     fractal.update = function () {
         renderOptions.c.real = parseFloat(document.getElementById("fractal_cReal").value);
@@ -272,6 +265,8 @@ window.fractal = window.fractal || {};
             canvas.width = 4000;
             canvas.height = 3000;
             break;
+        default:
+            return;
         }
         renderOptions.resolution = size;
         imageData = canvas.getContext("2d").createImageData(canvas.width, canvas.height);
