@@ -90,7 +90,7 @@ window.fractal = window.fractal || {};
             }
             x += 1;
         }
-        canvas.getContext("2d").putImageData(fractal.imageData, 0, 0);
+        canvas.getContext("2d").putImageData(imageData, 0, 0);
 
         let time = Date.now() - t0;
         document.getElementById("time").innerHTML = "fractal generated in " + (time / 1000) + " s";
