@@ -7,5 +7,6 @@ Single Page Application that generates fractals.
 - [ ] revisit code and make it up to date with ES2016
 - [ ] create documentation
 - [x] make JavaScript files pass JSLint
+- [ ] create License section
 
 [1]:https://wutek.github.io/fractal-generator/
