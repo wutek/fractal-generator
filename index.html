@@ -1,99 +1,110 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta http-equiv="Content-type" content="text/html; charset=UTF-8">
-		<title>Fractal Generator</title>
-		<link rel="stylesheet" type="text/css" href="styles.css" media="screen">
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+        <title>Fractal Generator</title>
+        <link rel="stylesheet" type="text/css" href="styles.css" media="screen">
 
-		<script src="complex.js" type="text/javascript"></script>
-		<script src="fractal.js" type="text/javascript" defer></script>
-		<script src="utility.js" type="text/javascript"></script>
-	</head>
+        <script src="complex.js"></script>
+        <script src="fractal.js" defer></script>
+        <script src="utility.js"></script>
+    </head>
+    <body>
+        <h1>FRACTAL GENERATOR</h1>
 
-	<body>
-		<h1>FRACTAL GENERATOR</h1>
+        <p class="center">
+            <canvas id="mainCanvas" width="640" height="480" title="click to zoom"></canvas>
+        </p>
 
-		<p class="center">
-		    <canvas	id="mainCanvas" width="640" height="480" title="click to zoom"></canvas>
-		</p>
+        <p class="center">
+            <button type="button" class="shiny-blue" onclick="fractal.zoomToRectangle(); ">ZOOM</button>
+            <button type="button" class="shiny-blue" onclick="fractal.random();">RANDOM</button>
+            <button type="button" class="shiny-blue" onclick="toggle('details')">DETAILS</button>
+            <button type="button" class="shiny-blue" onclick="toggle('info')">INFO</button>
+        </p>
 
-		<p class="center">
-			<button type="button" class="shiny-blue" onclick="fractal.zoomToRectangle(); ">ZOOM</button>
-			<button type="button" class="shiny-blue" onclick="fractal.random();">RANDOM</button>
-			<button type="button" class="shiny-blue" onclick="toggle('details')">DETAILS</button>
-			<button type="button" class="shiny-blue" onclick="toggle('info')">INFO</button>
-		</p>
+        <fieldset id="details" style="display:none; ">
+            <legend>DETAILS</legend>
+            <span class="variableName">x<sub>0</sub></span>
+            <span class="variableRange">(-2, 2)</span>
+            <input id="fractal_x0" type="text" value="-2">
+            <span class="variableName">y<sub>0</sub></span>
+            <span class="variableRange">(-1.5, 1.5)</span>
+            <input id="fractal_y0" type="text" value="-1.5">
+            <br>
+            <span class="variableName">c<sub>real</sub></span>
+            <span class="variableRange">(-1, 1)</span>
+            <input id="fractal_cReal" type="number" min="-1" max="1" step="0.001">
+            <span class="variableName">c<sub>img</sub></span>
+            <span class="variableRange">(-1, 1)</span>
+            <input id="fractal_cImg" type="number" min="-1" max="1" step="0.001">
+            <br>
+            <span class="variableName">width </span>
+            <span class="variableRange">(0, 4)</span>
+            <input id="fractal_width" type="text" value="4">
+            <span class="variableName">height</span>
+            <span class="variableRange">(0, 3)</span>
+            <input id="fractal_height" type="text" value="3">
+            <br>
+            <span class="variableName">brightness</span>
+            <select id="fractal_brightness" onchange="fractal.update();">
+                <option>0.5</option>
+                <option>1</option>
+                <option>2</option>
+                <option selected>4</option>
+                <option>8</option>
+                <option>16</option>
+            </select>
+            <span class="variableName">iterations</span>
+            <select id="fractal_iterations" onchange="fractal.update()">
+                <option selected>256</option>
+                <option>512</option>
+                <option>768</option>
+                <option>1024</option>
+                <option>1536</option>
+            </select>
+            <br>
+            <span class="variableName">function</span>
+            <select id="fractal_function" onchange="fractal.update()">
+                <option selected value="2">z² + c</option>
+                <option value="3">z³ + c</option>
+                <option value="4">z⁴ + c</option>
+                <option value="5">z⁵ + c</option>
+            </select>
+            <span class="variableName">resolution</span>
+            <select id="fractal_resolution" onchange="fractal.update()">
+                <option>320x240</option>
+                <option selected>640x480</option>
+                <option>800x600</option>
+                <option>1024x768</option>
+                <option>1800x1200</option>
+                <option>4000x3000</option>
+            </select>
+            <p><button class="shiny-blue" type="button" onclick="fractal.update()">UPDATE</button></p>
+            <p><span id="time"></span></p>
+            <ul>
+                <li>x<sub>0</sub>, y<sub>0</sub> - coordinates of the bottom left corner.</li>
+                <li>c<sub>real</sub>, c<sub>img</sub> - real and imaginary parts of the complex number <b>c</b> used to generate fractal.</li>
+                <li>width, height - width and height of the image, duh...</li>
+                <li>iterations - number of iterations per pixel. Lower the value to increase the speed of generating fractal.</li>
+                <li>function - function used to build fractal.</li>
+                <li>resolution - resolution of the image. Generating fractals in high resolution may take several minutes.</li>
+            </ul>
+        </fieldset>
 
-		<fieldset id="details" style="display:none; ">
-			<legend>DETAILS</legend>
-			<span class="variableName">x<sub>0</sub></span><span class="variableRange"> (-2, 2)</span><input id="fractal_x0" type="text" value="-2">
-			<span class="variableName">y<sub>0</sub></span><span class="variableRange"> (-1.5, 1.5)</span><input id="fractal_y0" type="text" value="-1.5">
-			<br>
-			<span class="variableName">c<sub>real</sub></span><span class="variableRange"> (-1, 1)</span><input id="fractal_cReal" type="number" min="-1" max="1">
-			<span class="variableName">c<sub>img</sub></span><span class="variableRange"> (-1, 1)</span><input id="fractal_cImg" type="number" min="-1" max="1">
-			<br>
-			<span class="variableName">width </span><span class="variableRange"> (0, 4)</span><input id="fractal_width" type="text" value="4">
-			<span class="variableName">height</span><span class="variableRange"> (0, 3)</span><input id="fractal_height" type="text" value="3">
-			<br>
-			<span class="variableName">brightness</span>
-			<select id="fractal_brightness" onchange="fractal.update();">
-				<option>0.5</option>
-				<option>1</option>
-				<option>2</option>
-				<option selected="selected">4</option>
-				<option>8</option>
-				<option>16</option>
-			</select>
-			<span class="variableName">iterations</span>
-			<select id="fractal_iterations" onchange="fractal.update()">
-				<option selected="selected">256</option>
-				<option>512</option>
-				<option>768</option>
-				<option>1024</option>
-				<option>1536</option>
-			</select>
-			<br>
-			<span class="variableName">function</span>
-			<select id="fractal_function" onchange="fractal.update()">
-				<option selected="selected" value="2">z² + c</option>
-				<option value="3">z³ + c</option>
-				<option value="4">z⁴ + c</option>
-				<option value="5">z⁵ + c</option>
-			</select>
-			<span class="variableName">resolution</span>
-			<select id="fractal_resolution" onchange="fractal.update()">
-				<option>320x240</option>
-				<option selected="selected">640x480</option>
-				<option>800x600</option>
-				<option>1024x768</option>
-				<option>1800x1200</option>
-				<option>4000x3000</option>
-			</select>
-			<p><button class="shiny-blue" type="button" onclick="fractal.update()">UPDATE</button></p>
-			<p><span id="time"></span></p>
-			<ul>
-				<li>x<sub>0</sub>, y<sub>0</sub> - coordinates of the bottom left corner.</li>
-				<li>c<sub>real</sub>, c<sub>img</sub> - real and imaginary parts of the complex number <b>c</b> used to generate fractal.</li>
-				<li>width, height - width and height of the image, duh...</li>
-				<li>iterations - number of iterations per pixel. Lower the value to increase the speed of generating fractal.</li>
-				<li>function - function used to build fractal.</li>
-				<li>resolution - resolution of the image. Generating fractals in high resolution may take several minutes.</li>
-			</ul>
-		</fieldset>
+        <fieldset id="info" style="display:none; ">
+            <legend>INFO</legend>
+            <ul>
+                <li>Click "RANDOM" to generate random fractal. It may take several times to get something interesting.</li>
+                <li>Single left click on the image to zoom to the point you have clicked.</li>
+                <li>Select area then click on the "ZOOM" button to zoom to the selected rectangle.</li>
+                <li>Click "DETAILS" button, change some values then click "UPDATE".</li>
+                <li>To save the image, right click on it and choose "Save Image As..." from the context menu.</li>
+            </ul>
+        </fieldset>
 
-		<fieldset id="info" style="display:none; ">
-			<legend>INFO</legend>
-			<ul>
-				<li>Click "RANDOM" to generate random fractal. It may take several times to get something interesting.</li>
-				<li>Single left click on the image to zoom to the point you have clicked.</li>
-				<li>Select area then click on the "ZOOM" button to zoom to the selected rectangle.</li>
-				<li>Click "DETAILS" button, change some values then click "UPDATE".</li>
-				<li>To save the image, right click on it and choose "Save Image As..." from the context menu.</li>
-			</ul>
-		</fieldset>
+        <p id="statusLine"></p>
 
-		<p id="statusLine"></p>
-		
-		<footer>&copy; 2013 dwoxniak@gmail.com</footer>
-	</body>
+        <footer>&copy; 2018 dwoxniak@gmail.com</footer>
+    </body>
 </html>
