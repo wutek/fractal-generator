@@ -1,0 +1,16 @@
+Enemies:
+
+Skeleton:     img/skeleton.png
+Knight:       img/knight.png
+Red Skeleton: img/redskeleton.png
+Dragon:       img/faeriedragon.png
+Alien:        img/alien.png
+
+Towers:
+
+Basic Tower:  img/tower.png
+
+Icons:
+
+Gold:            img/gold.png
+Number of lives: img/lives.png
